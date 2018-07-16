@@ -21,7 +21,7 @@ class m180716_083954_create_blog_table extends Migration
             'datetime' => $this->datetime(),
             'title' => $this->string(),
             'body' => $this->text(),
-        ]);
+        ], "CHARACTER SET utf8 COLLATE utf8_general_ci");
 
         // creates index for column `author_id`
         $this->createIndex(

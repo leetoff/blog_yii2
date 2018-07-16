@@ -24,7 +24,7 @@ class m180716_085219_create_comments_table extends Migration
             'parent_id' => $this->integer()->defaultValue(0),
             'datetime' => $this->datetime(),
             'text' => $this->text(),
-        ]);
+        ], "CHARACTER SET utf8 COLLATE utf8_general_ci");
 
         // creates index for column `author_id`
         $this->createIndex(
