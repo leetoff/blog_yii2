@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\repositories\BlogRepos;
 use Yii;
 use common\essences\Blog;
+use common\essences\Comments;
 use frontend\models\BlogSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -55,7 +56,20 @@ class BlogController extends Controller
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'model1' => $this->actionCreateComments()
         ]);
+    }
+
+    public function actionCreateComments()
+    {
+        $model1 = new Comments();
+        $model1->arcticle_id=$this->id;
+
+        if ($model1->load(Yii::$app->request->post()) && $model1->save()) {
+            return $model1;
+        }
+
+        return $model1;
     }
 
     /**

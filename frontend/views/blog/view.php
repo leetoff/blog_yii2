@@ -6,6 +6,7 @@ use common\repositories\GetUserNameRepos;
 
 /* @var $this yii\web\View */
 /* @var $model common\essences\Blog */
+/* @var $model1 common\essences\Comments*/
 
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Blogs', 'url' => ['index']];
@@ -22,4 +23,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <strong>Дата публикации:</strong> <?= $model->datetime ?>
     </p>
+    <?= $this->render('_commentform', [
+        'model1' => $model1,
+    ]) ?>
+
+    <?= ?>
+
 </main>
