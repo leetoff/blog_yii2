@@ -19,6 +19,7 @@ class BlogController extends Controller
     /**
      * {@inheritdoc}
      */
+    private $article_id;
     public function behaviors()
     {
         return [
@@ -63,9 +64,9 @@ class BlogController extends Controller
     public function actionCreateComments()
     {
         $model1 = new Comments();
-        $model1->arcticle_id=$this->id;
-
+        $model1->arcticle_id=$this->article_id;
         if ($model1->load(Yii::$app->request->post()) && $model1->save()) {
+            $this->redirect(['view', 'id' => $this->article_id]);
             return $model1;
         }
 
@@ -88,6 +89,7 @@ class BlogController extends Controller
     protected function findModel($id)
     {
         if (($model = Blog::findOne($id)) !== null) {
+            $this->article_id=$model->id;
             return $model;
         }
 

@@ -1,5 +1,6 @@
 <?php
 
+namespace common\repositories;
 use common\essences\Blog;
 use common\essences\Comments;
 use common\models\User;
@@ -9,16 +10,22 @@ class CommentsRepos
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getArcticle(Comments $essence)
+    public static function getArcticle(Comments $essence)
     {
-        return $this->hasOne(Blog::className(), ['id' => 'arcticle_id']);
+        return $essence->hasOne(Blog::className(), ['id' => 'arcticle_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAuthor(Comments $essence)
+    public static function getAuthor(Comments $essence)
     {
-        return $this->hasOne(User::className(), ['id' => 'author_id']);
+        return $essence->hasOne(User::className(), ['id' => 'author_id']);
+    }
+
+    public static function getUserName(Comments $essence){
+
+        $creator = User::findOne($essence->author_id);
+        return $creator->username;
     }
 }
