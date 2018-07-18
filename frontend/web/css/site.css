@@ -121,11 +121,10 @@ a.desc:after {
 
 .comment{
     display:list-item;
-    background: rgba(127, 230, 193, 0.49);
     margin:10px;
     line-height:20px;
     white-space: normal;
-
+    border-bottom:1px solid #74752f;
 }
 
 .p_post {
