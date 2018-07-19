@@ -26,15 +26,17 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <strong>Дата публикации:</strong> <?= $model->datetime ?>
     </p>
+    <a class="post_comment">Написать комментарий</a>
+    <div id="parent_comment"></div>
     <?= $this->render('_commentform', [
         'model1' => $model1,
     ]) ?>
             <ul>
                 <?php buildcomment($model->id);?>
             </ul>
-<!--            <!-- Подключаем jquery с сервера Яндекса -->-->
+<!--            <!-- Подключаем jquery с сервера Яндекса -->
             <script type="text/javascript" src="http://yandex.st/jquery/1.7.1/jquery.min.js"></script>
-    <!-- Наш скрипт запроса и обработки -->
+<!--     Наш скрипт запроса и обработки-->
     <script type="text/javascript">
         $(document).ready(function() {
             // Вешаем обработчик события "клик" на все ссылки с классом ajax_link
@@ -49,9 +51,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 var div_input = $(str);
                 div_input.append($( ".blog-form" ));
             });
+            $('a.post_comment').click(function() {
+                $('#parent_comment').append($( ".blog-form" ));
+            });
         });
     </script>
-
+<!--    <script type="text/javascript" src="../../web/js/answerButton.js"></script>-->
     <?php
     function buildcomment($post_id,$current_id=0)
     {
@@ -63,7 +68,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     <b><?= Html::encode(CommentsRepos::getUserName($comment));?></b>
                 <i>| <?= Html::encode($comment->datetime);?></i>
                 <br>
+                    <p class="commentText">
                 <?= Html::encode($comment->text); ?>
+                    </p>
                 <br>
                 <button class="submit" type="submit" id="<?= $comment->id?>"
                  data-parent="<?= $comment->id?>"

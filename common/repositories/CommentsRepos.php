@@ -3,7 +3,7 @@
 namespace common\repositories;
 use common\essences\Blog;
 use common\essences\Comments;
-use common\models\User;
+use common\essences\User;
 
 class CommentsRepos
 {
@@ -25,7 +25,13 @@ class CommentsRepos
 
     public static function getUserName(Comments $essence){
 
-        $creator = User::findOne($essence->author_id);
-        return $creator->username;
+        if($essence->author_id==null)
+        {
+            return 'Anonymous';
+        }
+        else {
+            $creator = User::findOne($essence->author_id);
+            return $creator->username;
+        }
     }
 }

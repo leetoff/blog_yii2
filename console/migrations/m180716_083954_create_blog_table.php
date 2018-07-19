@@ -17,7 +17,7 @@ class m180716_083954_create_blog_table extends Migration
     {
         $this->createTable('blog', [
             'id' => $this->primaryKey(),
-            'author_id' => $this->integer()->notNull(),
+            'author_id' => $this->integer(),
             'datetime' => $this->datetime(),
             'title' => $this->string(),
             'body' => $this->text(),

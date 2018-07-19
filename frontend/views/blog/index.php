@@ -3,7 +3,7 @@
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\grid\GridView;
-use common\models\User;
+use common\essences\User;
 use common\essences\Blog;
 
 /* @var $this yii\web\View */
@@ -28,6 +28,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'attribute' => 'author_id',
                     'value' => function (Blog $event) {
+                        if ($event->author_id==null)
+                            return "Anonymous";
                         $author = User::findOne($event->author_id);
                         return $author->username;
                     },

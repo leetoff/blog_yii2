@@ -17,7 +17,7 @@ return [
             'csrfParam' => '_csrf-backend',
         ],
         'user' => [
-            'identityClass' => 'common\models\User',
+            'identityClass' => 'common\essences\User',
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
         ],
@@ -37,12 +37,11 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-            ],
-        ],
+        'backendUrlManager' => require Yii::getAlias('@backendurlmanager'),
+        'frontendUrlManager' => require Yii::getAlias('@frontendurlmanager'),
+        'urlManager' => function(){
+            return Yii::$app->get('backendUrlManager');
+        },
     ],
     'params' => $params,
 ];

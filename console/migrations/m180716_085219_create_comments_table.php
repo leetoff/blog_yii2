@@ -18,7 +18,7 @@ class m180716_085219_create_comments_table extends Migration
     {
         $this->createTable('comments', [
             'id' => $this->primaryKey(),
-            'author_id' => $this->integer()->notNull(),
+            'author_id' => $this->integer(),
             'arcticle_id' => $this->integer()->notNull(),
             'level' => $this->integer()->defaultValue(0),
             'parent_id' => $this->integer()->defaultValue(0),

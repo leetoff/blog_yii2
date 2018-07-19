@@ -21,12 +21,11 @@ class AuthorBehavior extends Behavior
 
     public function beforeValidate($event)
     {
-        if (Yii::$app->user->identity->getId()) {
-            if (empty($this->owner->{$this->first_attribute}))
-                $this->owner->{$this->first_attribute} = \Yii::$app->user->identity->getId();
-            else $this->owner->{$this->first_attribute};
-        }
-
+            if (!Yii::$app->user->isGuest) {
+                if (empty($this->owner->{$this->first_attribute}))
+                    $this->owner->{$this->first_attribute} = \Yii::$app->user->identity->getId();
+                else $this->owner->{$this->first_attribute};
+            }
     }
 
 }

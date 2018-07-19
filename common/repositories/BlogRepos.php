@@ -3,7 +3,7 @@ namespace common\repositories;
 
 use common\essences\Blog;
 use common\essences\Comments;
-use common\models\User;
+use common\essences\User;
 use yii\data\ActiveDataProvider;
 
 class BlogRepos

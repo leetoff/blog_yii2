@@ -2,7 +2,7 @@
 namespace common\repositories;
 
 use common\essences\Blog;
-use common\models\User;
+use common\essences\User;
 class GetUserNameRepos{
     public static function getUserName(Blog $blog){
 

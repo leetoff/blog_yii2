@@ -2,7 +2,7 @@
 
 namespace common\essences;
 
-use common\models\User;
+use common\essences\User;
 use common\essences\Comments;
 use Yii;
 use yii\behaviors\TimestampBehavior;

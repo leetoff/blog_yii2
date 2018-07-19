@@ -1,7 +1,7 @@
 <?php
 
 use common\essences\Comments;
-use common\models\User;
+use common\essences\User;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\grid\GridView;
@@ -33,6 +33,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'attribute' => 'author_id',
                     'value' => function (Comments $event) {
+                        if ($event->author_id==null)
+                            return "Anonymous";
                         $author = User::findOne($event->author_id);
                         return $author->username;
                     },

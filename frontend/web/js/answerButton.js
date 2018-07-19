@@ -11,5 +11,5 @@
             $('#comments-level').val(level);
             var div_input = $(str);
             div_input.append($( ".blog-form" ));
-        })
+        });
     });
