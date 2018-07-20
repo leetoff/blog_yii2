@@ -76,4 +76,9 @@ class Blog extends \yii\db\ActiveRecord
             ],
         ];
     }
+
+    public function getComments()
+    {
+        return $this->hasMany(Comments::className(), ['arcticle_id' => 'id']);
+    }
 }

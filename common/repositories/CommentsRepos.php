@@ -25,13 +25,12 @@ class CommentsRepos
 
     public static function getUserName(Comments $essence){
 
-        if($essence->author_id==null)
+        if($essence->author==null)
         {
             return 'Anonymous';
         }
         else {
-            $creator = User::findOne($essence->author_id);
-            return $creator->username;
+            return $essence->author->username;
         }
     }
 }

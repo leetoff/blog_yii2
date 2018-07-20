@@ -64,12 +64,19 @@ class BlogController extends Controller
     public function actionCreateComments()
     {
         $model1 = new Comments();
-        $model1->arcticle_id=$this->article_id;
-        if ($model1->load(Yii::$app->request->post()) && $model1->save()) {
-            $this->redirect(['view', 'id' => $this->article_id]);
-            return $model1;
+        $model1->arcticle_id = $this->article_id;
+        if ($model1->load(Yii::$app->request->post())) {
+            if ($model1->parent_id == 0) {
+                $model1->makeRoot();
+            } else {
+                $parent = Comments::find()->andWhere(['id' => $model1->parent_id])->one();
+                $model1->prependTo($parent);
+            }
+            if ($model1->save()) {
+                $this->redirect(['view', 'id' => $this->article_id]);
+                return $model1;
+            }
         }
-
         return $model1;
     }
 

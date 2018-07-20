@@ -66,10 +66,20 @@ class CommentsController extends Controller
     {
         $model = new Comments();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
+        if ($model->load(Yii::$app->request->post())){
+            $model->tree=1;
 
+            if ($model->parent_id==0)
+            {
+                $model->makeRoot();
+            }else{
+                $parent = Comments::find()->andWhere(['id'=>$model->parent_id])->one();
+                $model->prependTo($parent);
+            }
+            if ($model->save()){
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+        }
         return $this->render('create', [
             'model' => $model,
         ]);

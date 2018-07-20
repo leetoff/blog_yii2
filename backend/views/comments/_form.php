@@ -16,11 +16,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'arcticle_id')->textInput() ?>
 
-    <?= $form->field($model, 'level')->textInput() ?>
-
     <?= $form->field($model, 'parent_id')->textInput() ?>
 
     <?= $form->field($model, 'datetime')->textInput() ?>
+
+    <?= $form->field($model, 'tree')->textInput() ?>
 
     <?= $form->field($model, 'text')->textarea(['rows' => 6]) ?>
 

@@ -3,6 +3,7 @@
 namespace common\essences;
 
 use common\essences\User;
+use creocoder\nestedsets\NestedSetsBehavior;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
@@ -16,6 +17,10 @@ use yii\db\Expression;
  * @property int $arcticle_id
  * @property int $level
  * @property int $parent_id
+ * @property int $lft
+ * @property int $rgt
+ * @property int $depth
+ * @property int $tree
  * @property string $datetime
  * @property string $text
  *
@@ -39,8 +44,8 @@ class Comments extends \yii\db\ActiveRecord
     {
         return [
 //            [['author_id', 'arcticle_id'], 'required'],
-            [['author_id', 'arcticle_id', 'level', 'parent_id'], 'integer'],
-            [['datetime'], 'safe'],
+            [['author_id', 'arcticle_id', 'level', 'parent_id','lft','rgt','depth','tree'], 'integer'],
+            [['datetime','lft','rgt','depth', 'tree'], 'safe'],
             [['text'], 'string'],
             [['arcticle_id'], 'exist', 'skipOnError' => true, 'targetClass' => Blog::className(), 'targetAttribute' => ['arcticle_id' => 'id']],
             [['author_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['author_id' => 'id']],
@@ -60,11 +65,21 @@ class Comments extends \yii\db\ActiveRecord
             'parent_id' => 'Parent ID',
             'datetime' => 'Datetime',
             'text' => 'Text',
+            'lft' => 'Left',
+            'rgt' => 'Right',
+            'depth' => 'Depth'
         ];
     }
     public function behaviors()
     {
         return [
+            'tree' => [
+                'class' => NestedSetsBehavior::className(),
+                'treeAttribute' => 'tree',
+                'leftAttribute' => 'lft',
+                'rightAttribute' => 'rgt',
+                'depthAttribute' => 'depth',
+            ],
             'AuthorBehavior' => [
                 'class' => 'common\behaviors\AuthorBehavior',
                 'first_attribute' => 'author_id',
@@ -79,4 +94,21 @@ class Comments extends \yii\db\ActiveRecord
             ],
         ];
     }
+    public function transactions()
+    {
+        return [
+            self::SCENARIO_DEFAULT => self::OP_ALL,
+        ];
+    }
+
+    public static function find()
+    {
+        return new CommentsQuery(get_called_class());
+    }
+
+    public function getAuthor()
+    {
+        return $this->hasOne(User::className(), ['id' => 'author_id']);
+    }
+
 }

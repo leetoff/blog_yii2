@@ -25,16 +25,16 @@ $this->params['breadcrumbs'][] = $this->title;
                 ['class' => 'yii\grid\SerialColumn'],
 
 //                'id',
-                [
-                    'attribute' => 'author_id',
-                    'value' => function (Blog $event) {
-                        if ($event->author_id==null)
-                            return "Anonymous";
-                        $author = User::findOne($event->author_id);
-                        return $author->username;
-                    },
-                    'filter' => ArrayHelper::map(User::find()->all(), 'id', 'username')
-                ],
+//                [
+//                    'attribute' => 'author_id',
+//                    'value' => function (Blog $event) {
+//                        if ($event->author_id==null)
+//                            return "Anonymous";
+//                        $author = User::findOne($event->author_id);
+//                        return $author->username;
+//                    },
+//                    'filter' => ArrayHelper::map(User::find()->all(), 'id', 'username')
+//                ],
                 'datetime',
                 'title',
                 [

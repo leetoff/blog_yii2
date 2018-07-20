@@ -32,7 +32,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'model1' => $model1,
     ]) ?>
             <ul>
-                <?php buildcomment($model->id);?>
+                <?php $comments = Comments::find()->where(['arcticle_id'=>$model->id])->with("author")->all();
+                buildcomment($comments);?>
             </ul>
 <!--            <!-- Подключаем jquery с сервера Яндекса -->
             <script type="text/javascript" src="http://yandex.st/jquery/1.7.1/jquery.min.js"></script>
@@ -58,9 +59,8 @@ $this->params['breadcrumbs'][] = $this->title;
     </script>
 <!--    <script type="text/javascript" src="../../web/js/answerButton.js"></script>-->
     <?php
-    function buildcomment($post_id,$current_id=0)
+    function buildcomment(&$comments,$current_id=0)
     {
-        $comments = Comments::find()->where(['arcticle_id'=>$post_id])->all();
         foreach ($comments as $comment){
             if ($comment->parent_id==$current_id)
             {?>
@@ -79,7 +79,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
                     <hr>
                 </li>
-                <?php buildcomment($post_id,$comment->id);
+                <?php buildcomment($comments,$comment->id);
             }
         }
     } ?>
